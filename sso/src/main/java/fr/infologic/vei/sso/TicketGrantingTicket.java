@@ -75,9 +75,9 @@ public class TicketGrantingTicket
             GSSManager gssManager = GSSManager.getInstance();
             GSSName client = gssManager.createName(getClient().getName(), null);
             GSSCredential clientCredentials = gssManager.createCredential(client, 8*60*60, kerberos5Oid, GSSCredential.INITIATE_ONLY);
+            
             GSSName service = gssManager.createName(serviceName, null);
-            GSSContext gssContext = gssManager.createContext(service, kerberos5Oid, clientCredentials, GSSContext.DEFAULT_LIFETIME);
-            return gssContext;
+            return gssManager.createContext(service, kerberos5Oid, clientCredentials, GSSContext.DEFAULT_LIFETIME);
         }
     }
 }

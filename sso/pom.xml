@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>fr.infologic.vei</groupId>
 	<artifactId>sso</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.2-SNAPSHOT</version>
 	<name>Single Sign On</name>
 	<description>SSO using Kerberos</description>
 	<properties>

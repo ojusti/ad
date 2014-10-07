@@ -1,6 +1,8 @@
 package fr.infologic.vei.sso;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static fr.infologic.vei.sso.LoginTestsHelper.assertThatClientIsUser;
+import static fr.infologic.vei.sso.LoginTestsHelper.loginServer;
+import static fr.infologic.vei.sso.LoginTestsHelper.userAcquiresTicket;
 
 import java.io.File;
 import java.security.Principal;
@@ -74,16 +76,6 @@ public class LoginUsingEmbeddedKerberosTest extends KerberosSecurityTestcase
         return new EntityName("inexistent_service");
     }
 
-    private static ServiceTicket userAcquiresTicket(LoginContext user, EntityName service) throws LoginException
-    {
-        return new ClientLogin(user).login().acquireServiceTicket(service);
-    }
-    
-    private static void assertThatClientIsUser(EntityName client, LoginContext user)
-    {
-        assertThat(client).isEqualTo(EntityName.fromSubject(user.getSubject()));
-    }
-    
     private LoginContext anotherUser() throws Exception
     {
         return makeClient("another_user");
@@ -92,11 +84,6 @@ public class LoginUsingEmbeddedKerberosTest extends KerberosSecurityTestcase
     private EntityName otherServiceName() throws Exception
     {
         return EntityName.fromSubject(makeServer("another_service").getSubject());
-    }
-    
-    private static ServiceTicketAuthenticator loginServer(LoginContext targetServer) throws LoginException
-    {
-        return new ServiceLogin(targetServer).login();
     }
     
     private LoginContext makeClient(String userName) throws Exception 
