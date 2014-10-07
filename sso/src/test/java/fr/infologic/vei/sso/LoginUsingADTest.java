@@ -4,8 +4,10 @@ import javax.security.auth.login.LoginContext;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
+@Ignore
 public class LoginUsingADTest
 {
     private EntityName serviceName;
@@ -34,12 +36,23 @@ public class LoginUsingADTest
         LoginContext targetServer = new LoginContext("server");
         service = LoginTestsHelper.loginServer(targetServer);
         serviceName = EntityName.fromSubject(targetServer.getSubject());
-        user = new LoginContext("client");
     }
     
     @Test
-    public void login_using_external_AD() throws LoginException
+    public void login_using_external_AD() throws LoginException, javax.security.auth.login.LoginException
     {
+        test_with_external_AD("client");
+    }
+    
+    @Test
+    public void sso_using_external_AD() throws LoginException, javax.security.auth.login.LoginException
+    {
+        test_with_external_AD("sso_client");
+    }
+    
+    private void test_with_external_AD(String loginEntry) throws LoginException, javax.security.auth.login.LoginException
+    {
+        user = new LoginContext(loginEntry);
         ServiceTicket ticket = LoginTestsHelper.userAcquiresTicket(user, serviceName);
 
         EntityName client = service.authenticate(ticket);
